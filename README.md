@@ -16,7 +16,7 @@
 
 - Homework 4 and final project (proposal + final) posted soon.
 
-## Outline of lecture
+## Outline
 
 Sometimes in Rust we want really low-level control over how our program runs.
 Examples:
@@ -31,10 +31,19 @@ Examples:
 
 - Spawning and handling threads and processes.
 
-Today we will go over some of the things in the Rust toolbox for these programming tasks, which will be useful for Homework 4:
+In this lecture we will go over some of the things in the Rust toolbox for these programming tasks, which will be useful for Homework 4.
+Like the last few, this lecture will be split into multiple parts.
 
-- Unsafe code;
+### Part 1
 
-- Smart pointer types; and (if time)
+- Unsafe code (`unsafe` blocks and functions)
 
-- C code wrappers and system calls.
+- Introduction to smart pointer types: `IDManger` case study
+
+### Part 2
+
+- C code wrappers and system calls (`libc`, `nix`)
+
+- Smart pointer types continued (`Box`, `Cell`, `Rc`, `RefCell`, etc.)
+
+- Manual memory management (the `Drop` trait, `mem::replace`)
