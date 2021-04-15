@@ -75,7 +75,7 @@ Like the last few, this lecture will be split into multiple parts.
 
 - Smart pointer types continued (`Box`, `Cell`, `Rc`, `RefCell`, etc.)
 
-### Didn't get to in lecture -- provided offline
+### Optional additional material (didn't get to in lecture)
 
 - Manual memory management (the `Drop` trait, `mem::replace`)
 

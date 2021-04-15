@@ -153,3 +153,32 @@ impl Cache {
         }
     }
 }
+
+/*
+    RefCell:
+
+    Cell only works above for simple Copy types, like usize.
+    It avoids runtime overhead by copying memory in and out of the cell.
+
+    In general to do this though for an arbitrary type requries runtime
+    checking of the borrow rules, and is done with RefCell.
+
+    To get around both shared ownership AND mutability rules, you will
+    often see code with
+
+    Rc<RefCell<T>>.
+*/
+
+use std::cell::RefCell;
+use std::rc::Rc;
+
+pub struct RefCellExample {
+    previous: Rc<RefCell<Vec<usize>>>,
+    next: Rc<RefCell<Vec<usize>>>,
+}
+impl RefCellExample {
+    pub fn modify_with_immut_self(&self) {
+        self.previous.borrow_mut().push(3);
+        self.next.borrow_mut().push(4);
+    }
+}
