@@ -133,11 +133,15 @@ pub fn call_unsafe_bloc() {
     ========== End of Lecture 8 Part 1 ==========
 */
 
-// Rust must trust:
+/* WORD OF WARNING ABOUT UNSAFE CODE */
+
+// You have to really careful that your code doesn't break any of
+// the assumptions of other code / the Rust compiler / memory layout / etc.
+// Rust must trust your code to behave as expected...
 
 // From book:
 pub fn normal_code() {
-    let i = 10;
+    let i = 10; // Compiler notices: i is not mutable
     trusted_function(&i);
     println!("{}", i * 100);
 
@@ -147,14 +151,22 @@ pub fn normal_code() {
 }
 
 pub fn trusted_function(shared: &i32) {
+    // bad code violates assumptions made by the Rust compiler
     unsafe {
+        // the following line converts the immutable reference
+        // to a mutable one via constant pointers
         let mutable = shared as *const i32 as *mut i32;
         *mutable = 20;
     }
 }
 
 // This breaks the optimization rust did! Code no longer has the same meaning
-// before and after the calls!
+// before and after the compiler optimization.
+
+// Another example: from homework3 and from last time id_manger
+// raw pointers can break if a data structure like a HashMap or Vec is reallocated
+
+// Upshot: avoid unsafe honestly unless you really know your doing
 
 // Almost all optmizations could lead to cases like this... So we either chose never
 // to optimize code, or live knowning undefined behavior could mess up our programs...
@@ -212,23 +224,54 @@ pub fn call_time() {
     let _t = unsafe { time(null_mut()) };
 }
 
-use std::mem::size_of;
+/*
+    System calls
+    Rust: Nix
+    https://docs.rs/nix/0.20.0/nix/
 
-pub fn sizeof_operator() {
-    // let t = (3, 3i8);
-    let _size = size_of::<(i32, i8)>();
+    homework4:
+    https://github.com/upenn-cis198/homework4
+
+    fork and wait
+*/
+
+use nix::sys::signal::{self, Signal};
+use nix::unistd::{self, ForkResult};
+
+pub fn test_fork() {
+    unsafe {
+        match unistd::fork().unwrap() {
+            ForkResult::Parent { child: child_pid } => {
+                println!("Hello from parent!");
+                println!("Child PID: {}", child_pid);
+
+                // We have the child PID so we can do something like
+                // - kill the child
+                signal::kill(child_pid, Signal::SIGTERM)
+                    .expect("sending signal kill failed :(");
+                // may terminate the child before it even has time
+                // say hello
+
+                // More robust:
+                // - wait on the child
+                // nix::sys::wait::waitpid
+            }
+            ForkResult::Child => {
+                println!("Hello from child!");
+                loop {
+                    println!("loopy");
+                }
+            }
+        }
+    }
+    // assert!(false);
 }
 
-// Talk about linking.
-// Talk about static vs shared objects.
-// Show example of linking in C?
-// nm
-// ldd
-
-// What is glibc.
-// Rust: libc
-// Rust: Nix
-// Talk about system calls.
+// This is for low-level concurrent programming with processes
+// But you don't have to do this if you want to use a higher-level library
+// for example to run a bunch of stuff in parallel:
+// Rayon: https://crates.io/crates/rayon
+// offers: .par_iter() similar to .iter()
 
 // FFI
 // Most languages interface through C.

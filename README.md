@@ -1,6 +1,6 @@
 # Lecture 8: Systems Programming
 
-## Reminders
+## Reminders (April 8)
 
 - Homework 3 final due date is tomorrow.
 
@@ -15,6 +15,35 @@
 - Connect with your final project team! (Form a group chat?) Team assignments are on Piazza.
 
 - Homework 4 and final project (proposal + final) posted soon.
+
+## Reminders (April 15)
+
+- Homework 3 grading is underway. Out of 130. Common mistakes today if time.
+
+    Comments are in the dedicated git pull request
+
+- Final project proposal due **tomorrow April 16**
+
+    I will not delay the deadline for this, but I will allow this to be more interactive, i.e. you first post your idea / what you are thinking about, I can comment on it and you will have a chance to update it. But you need to show that you have thought about / are working on it
+
+    (Use the GitHub classroom link to create a team, and then join the appropriate team)
+
+- Homework 4 available and due **Thursday, April 22.**
+
+    `strace` utility (with extra credit)
+
+- Homework make-up option (choose 1 assignment)
+
+- Only 1-2 more lectures after today -- TBD topic preferences. Options:
+
+    1. Concurrent and parallel programming
+
+    2. Useful crates and tools, e.g. web programming
+
+    3. Advanced features and future of Rust
+
+        - async/await related features
+        - const generics
 
 ## Outline
 
@@ -46,4 +75,8 @@ Like the last few, this lecture will be split into multiple parts.
 
 - Smart pointer types continued (`Box`, `Cell`, `Rc`, `RefCell`, etc.)
 
+### Didn't get to in lecture -- provided offline
+
 - Manual memory management (the `Drop` trait, `mem::replace`)
+
+- HW3 common mistakes
